@@ -66,22 +66,6 @@ return {
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
       end,
     })
-    
-    vim.lsp.config('lua_ls', {
-      settings = {
-        Lua = {
-          runtime = {
-            version = 'LuaJIT',
-          },
-          diagnostics = {
-            globals = {
-              'vim',
-              'require'
-            }
-          }
-        }
-      }
-    })
 
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -94,5 +78,33 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = {
+              'vim',
+              'require',
+            },
+          },
+        },
+      },
+    })
+
+    vim.lsp.config('intelephense', {
+      settings = {
+        intelephense = {
+          files = {
+            associations = { "*.php" }
+          },
+          format = {
+            enable = true
+          }
+        }
+      }
+    })
   end,
 }
