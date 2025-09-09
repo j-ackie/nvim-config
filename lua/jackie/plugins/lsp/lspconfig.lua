@@ -66,6 +66,22 @@ return {
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
       end,
     })
+    
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = {
+              'vim',
+              'require'
+            }
+          }
+        }
+      }
+    })
 
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -78,30 +94,5 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        })
-      end,
-    })
   end,
 }
