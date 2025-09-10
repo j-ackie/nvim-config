@@ -2,6 +2,13 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000, -- make sure to load this before all the other start plugins
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent"
+      }
+    },
     config = function()
       local bg = "#011628"
       local bg_dark = "#011423"
